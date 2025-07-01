@@ -5,12 +5,10 @@ from services.login_finder import find_login
 import logging.config
 import os
 
-# ----> Загружаем конфигурацию логгирования <----
 with open("config/logging_config.yaml", "r") as f:
     config = yaml.safe_load(f)
     logging.config.dictConfig(config)
 
-# Теперь логгер работает!
 logger = logging.getLogger(__name__)
 
 app = FastAPI()
