@@ -10,7 +10,7 @@ def mistral(message):
 
     """Вызывает API Mistral с таймаутом."""
     client = Mistral(api_key=API_KEY)
-    model_name = "mistral-large-latest"
+    model_name = "mistral-medium-2505"
 
 
     result = [None]  # Используем список, чтобы изменить его внутри потока

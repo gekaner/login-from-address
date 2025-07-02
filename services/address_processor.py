@@ -12,7 +12,7 @@ def extract_address_from_message(message: str) -> Optional[str]:
 
     address_suggestions = vector_client.fetch_address_suggestions(message)
     if not address_suggestions:
-        logger.warning("Не найдено адресных подсказок", extra={"message": message})
+        logger.warning("Не найдено адресных подсказок", extra={"input_message": message})
         return None
 
     example_addresses = ", ".join(addr['address'] for addr in address_suggestions[:3])

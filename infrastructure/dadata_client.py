@@ -1,7 +1,7 @@
 import logging
 import json
 import requests
-from typing import List, Dict, Any, Optional
+from typing import Dict, Any, Optional
 
 from config import DADATA_TOKEN
 

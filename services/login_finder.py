@@ -13,7 +13,7 @@ def find_login(message: str) -> Dict[str, Optional[str]]:
 
     extracted_address = extract_address_from_message(message)
     if not extracted_address:
-        logger.warning("Не удалось извлечь адрес из сообщения", extra={"message": message})
+        logger.warning("Не удалось извлечь адрес из сообщения", extra={"input_message": message})
         return {'login': None, 'houseid': None, 'fiasid': None}
 
     fias_data = get_fias_id_from_address(extracted_address)
@@ -66,8 +66,8 @@ def match_logins_by_flat(login_data: Dict[str, Any], flat_number: int) -> List[s
 def select_login_based_on_service(mes: str, logins: List[str], login_data: Dict[str, Any]) -> Optional[str]:
     """Выбирает логин на основе наличия сервиса в данных о логинах."""
     first_login, second_login = logins[0], logins[1]
-    first_service = login_data[first_login]['service']
-    second_service = login_data[second_login]['service']
+    first_service = login_data[first_login].get('service', None)
+    second_service = login_data[second_login].get('service', None)
 
     logger.debug("Сравнение логинов по наличию сервиса", extra={
         "first_login": first_login,
