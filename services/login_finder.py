@@ -59,15 +59,25 @@ def get_house_id(house_data: Dict[str, Any]) -> str:
 
 def match_logins_by_flat(login_data: Dict[str, Any], flat_number: int) -> List[str]:
     """Фильтрует логины по номеру квартиры."""
-    matched = [login for login in login_data if login_data[login]['flat'] == flat_number]
+    logger.info(f'МАССИВЧИК ЛОГИНЧИКОВ!!!!! {login_data}', extra={'login_data': login_data})
+    logger.info(f"!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! {flat_number}", extra={"flat_number": flat_number})
+    for login in login_data:
+        loginchik = login_data[login]['login']
+        kvartirka = login_data[login]['flat']
+        logger.info(f'ЛОГИНЧИК {loginchik} КВАРТИРКА {kvartirka}', extra={'login': loginchik, 'flat':kvartirka})
+        logger.info(f'ОКЕЙ ЛАДНО ТИП КВАРТИРКИ: {type(kvartirka)}, ТИП КВАРТИРКИ ИЗ ДАДАТЫ: {type(flat_number)}', extra={'kv': kvartirka, 'kvda': flat_number})
+    matched = [login for login in login_data if login_data[login]['flat'] == int(flat_number)]
+    logger.info(f"&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& {matched}", extra={"matched": matched})
     return matched
 
 
 def select_login_based_on_service(mes: str, logins: List[str], login_data: Dict[str, Any]) -> Optional[str]:
     """Выбирает логин на основе наличия сервиса в данных о логинах."""
     first_login, second_login = logins[0], logins[1]
-    first_service = login_data[first_login].get('service', None)
-    second_service = login_data[second_login].get('service', None)
+    first_service = login_data[first_login].get('services', None)
+    logger.info(f'ПЕРВЫЙ ЛОГИНЧИК СЕРВИСЫ!!!!!!!!!!!!!: {first_service}')
+    second_service = login_data[second_login].get('services', None)
+    logger.info(f'ВТОРОЙ ЛОГИНЧИК СЕРВИСЫ!!!!!!!!!!!!!: {second_service}')
 
     logger.debug("Сравнение логинов по наличию сервиса", extra={
         "first_login": first_login,
@@ -76,11 +86,11 @@ def select_login_based_on_service(mes: str, logins: List[str], login_data: Dict[
         "second_service": second_service
     })
 
-    if first_service is None and second_service is not None:
+    if (first_service is None or first_service == []) and second_service is not None:
         selected = second_login.split(':')[1]
         logger.info("Выбран второй логин", extra={"login": selected})
         return selected
-    elif second_service is None and first_service is not None:
+    elif (second_service is None or second_service == []) and first_service is not None:
         selected = first_login.split(':')[1]
         logger.info("Выбран первый логин", extra={"login": selected})
         return selected
