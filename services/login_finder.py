@@ -23,18 +23,19 @@ def find_login(message: str) -> Dict[str, Optional[str]]:
 
     fias_id = fias_data["fias_id"]
     flat_number = fias_data["flat_number"]
+    city_fias = fias_data["city_fias"]
 
     house_data = redis_client.fetch_house_data(fias_id)
     if not house_data:
         logger.warning("Дом не найден по FIAS ID", extra={"fias_id": fias_id})
-        return {'login': None, 'houseid': None, 'fiasid': fias_id}
+        return {'login': None, 'houseid': None, 'fiasid': fias_id, 'city_fias': city_fias}
 
     house_id = get_house_id(house_data)
 
     login_data = redis_client.fetch_login_data(house_id)
     if not isinstance(login_data, dict):
         logger.warning("Логины не найдены для дома", extra={"house_id": house_id})
-        return {'login': None, 'houseid': house_id, 'fiasid': fias_id}
+        return {'login': None, 'houseid': house_id, 'fiasid': fias_id, 'city_fias': city_fias}
 
     logins = list(login_data.keys())
 
@@ -47,7 +48,7 @@ def find_login(message: str) -> Dict[str, Optional[str]]:
         "fias_id": fias_id
     })
 
-    return {'login': login, 'houseid': house_id, 'fiasid': fias_id}
+    return {'login': login, 'houseid': house_id, 'fiasid': fias_id, 'city_fias': city_fias}
 
 
 def get_house_id(house_data: Dict[str, Any]) -> str:

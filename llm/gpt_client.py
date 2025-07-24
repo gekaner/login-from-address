@@ -1,5 +1,5 @@
 from openai import OpenAI
-from httpx import Client, Proxy
+from httpx import Client
 from config import API_GPT, PROXY
 
 def gpt(message):

@@ -23,7 +23,6 @@ def fetch_dadata_suggestion(extracted_address: str) -> Optional[Dict[str, Any]]:
         response = requests.post(url, headers=headers, data=json.dumps(data))
         response.raise_for_status()
         result = response.json()
-
         logger.info("Данные от DaData получены", extra={"result": result})
         return result["suggestions"][0] if result.get("suggestions") else None
 
