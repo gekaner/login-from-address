@@ -30,14 +30,14 @@ def extract_address_from_message(message: str) -> Optional[str]:
 def extract_address_with_llm(prompt: str, message: str) -> str:
     """Использует LLM для извлечения точного адреса из сообщения."""
 
-    from llm import gpt_client
+    from llm import mistral_client
     messages = [
         {"role": "system", "content": prompt},
         {"role": "user", "content": message.replace("'", '"').replace('\"', '"')}
     ]
 
     try:
-        result = gpt_client.gpt(messages)
+        result = mistral_client.mistral(messages)
         return result
     except Exception as e:
         logger.error("Ошибка при вызове LLM", exc_info=True, extra={"error": str(e)})
