@@ -48,7 +48,7 @@ def find_login(message: str) -> Dict[str, Optional[str]]:
         "fias_id": fias_id
     })
 
-    return {'login': login, 'houseid': house_id, 'fiasid': fias_id, 'city_fias': city_fias}
+    return {'login': login, 'houseid': house_id, 'fiasid': fias_id, 'city_fias': city_fias, 'region_fias': region_fias}
 
 
 def get_house_id(house_data: Dict[str, Any]) -> str:
