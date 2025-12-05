@@ -55,9 +55,11 @@ def get_fias_id_from_address(extracted_address: str) -> Optional[Dict[str, Any]]
     fias_id = (suggestion["data"].get("house_fias_id") or suggestion["data"]["fias_id"]).replace("-", "%20")
     city_fias = (suggestion["data"].get("city_fias_id") or suggestion["data"].get("settlement_fias_id")).replace("-", "%20")
     flat_number = suggestion["data"].get("flat")
+    region_fias = suggestion["data"].get("region_fias_id")
 
     return {
         "fias_id": fias_id,
         "flat_number": flat_number,
-        "city_fias": city_fias
+        "city_fias": city_fias, 
+        "region_fias": region_fias
     }
